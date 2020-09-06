@@ -32,17 +32,15 @@ public class UpdateServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String _token = (String)request.getParameter("_token");
+        String _token = request.getParameter("_token");
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
             // セッションスコープからタスクのIDを取得して
             // 該当のIDのタスク1件のみをデータベースから取得
-            Tasks m = em.find(Tasks.class, (Integer)(request.getSession().getAttribute("Tasks_id")));
+            Tasks m = em.find(Tasks.class, (Integer)(request.getSession().getAttribute("tasks_id")));
 
             // フォームの内容を各プロパティに上書き
-
-
             String content = request.getParameter("content");
             m.setContent(content);
 
